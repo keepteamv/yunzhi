@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using YunZhi.Service.Infrastructure;
 
-namespace PanasonicInspect.Service.Models
+namespace YunZhi.Service.Models
 {
     public abstract class EntityCore
     {
@@ -10,8 +12,18 @@ namespace PanasonicInspect.Service.Models
         /// 聚合根ID
         /// </summary>
         [Required]
+        [MaxLength(32)]
+        public string Id { get; set; } = ObjectId.GenerateNewStringId();
+        /// <summary>
+        /// 自增
+        /// </summary>
         [Key]
-        public int Id { get; set; }
+        public int Sequence { get; set; }
+        // /// <summary>
+        // /// GUID
+        // /// </summary>
+        // /// <returns></returns>
+        // public string GUID { get; set; } = Guid.NewGuid().ToString();
         /// <summary>
         /// 创建时间
         /// </summary>
@@ -22,7 +34,7 @@ namespace PanasonicInspect.Service.Models
         /// </summary>
         [Required]
         public DateTime UpdatedOn { get; set; }
-        
+
         private readonly List<BusinessRule> _brokenRules = new List<BusinessRule>();
         protected abstract void Validate();
         public IEnumerable<BusinessRule> GetBrokenRules()

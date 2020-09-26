@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using PanasonicInspect.Service.Models;
+using YunZhi.Service.Models;
 
-namespace PanasonicInspect.Service.Services
+namespace YunZhi.Service.Services
 {
-    public class ServiceBase<T>:QueryServiceBase<T> where T : EntityCore
+    public class ServiceBase<T> : QueryServiceBase<T> where T : EntityCore
     {
         private readonly DbContext _context;
 
@@ -78,7 +78,7 @@ namespace PanasonicInspect.Service.Services
 
         protected async Task<bool> CommitAsync()
         {
-            return  await _context.SaveChangesAsync() > 0;
+            return await _context.SaveChangesAsync() > 0;
         }
 
         protected bool Commit()

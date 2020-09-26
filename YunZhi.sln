@@ -1,9 +1,31 @@
 
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YunZhi.WebAPI", "YunZhi.WebAPI\YunZhi.WebAPI.csproj", "{DFB31587-37A6-4A0D-A987-F88598791D44}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YunZhi.Service", "YunZhi.Service\YunZhi.Service.csproj", "{5F85EB1D-AF85-4E93-97DE-67EC3BDE2852}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YunZhi.MobileAPI", "YunZhi.MobileAPI\YunZhi.MobileAPI.csproj", "{74BF0531-0D3E-49C6-8B21-A162ABDFFBB8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{F30C3C0C-FCC8-4B40-A526-A202FDFA5163}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DFB31587-37A6-4A0D-A987-F88598791D44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFB31587-37A6-4A0D-A987-F88598791D44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFB31587-37A6-4A0D-A987-F88598791D44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFB31587-37A6-4A0D-A987-F88598791D44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F85EB1D-AF85-4E93-97DE-67EC3BDE2852}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F85EB1D-AF85-4E93-97DE-67EC3BDE2852}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F85EB1D-AF85-4E93-97DE-67EC3BDE2852}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F85EB1D-AF85-4E93-97DE-67EC3BDE2852}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74BF0531-0D3E-49C6-8B21-A162ABDFFBB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74BF0531-0D3E-49C6-8B21-A162ABDFFBB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74BF0531-0D3E-49C6-8B21-A162ABDFFBB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74BF0531-0D3E-49C6-8B21-A162ABDFFBB8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

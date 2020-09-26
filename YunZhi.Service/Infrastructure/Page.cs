@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace PanasonicInspect.Service.Infrastructure
+namespace YunZhi.Service.Infrastructure
 {
     public class Page<T>
     {

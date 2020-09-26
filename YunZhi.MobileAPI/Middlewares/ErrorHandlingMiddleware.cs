@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
-using PanasonicInspect.Service.Infrastructure;
+using YunZhi.Service.Infrastructure;
 
-namespace PanasonicInspect.MobileAPI.Middlewares
+namespace YunZhi.MobileAPI.Middlewares
 {
     public class ErrorHandlingMiddleware
     {

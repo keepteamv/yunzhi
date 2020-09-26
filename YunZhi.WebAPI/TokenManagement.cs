@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace PanasonicInspect
+namespace YunZhi.WebAPI
 {
     public class TokenManagement
     {

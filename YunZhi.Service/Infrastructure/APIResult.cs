@@ -1,4 +1,4 @@
-namespace PanasonicInspect.Service.Infrastructure
+namespace YunZhi.Service.Infrastructure
 {
     /// <summary>
     /// API统一返回类

@@ -3,10 +3,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using PanasonicInspect.Service.Infrastructure;
-using PanasonicInspect.Service.Models;
+using YunZhi.Service.Infrastructure;
+using YunZhi.Service.Models;
 
-namespace PanasonicInspect.Service.Services
+namespace YunZhi.Service.Services
 {
     /// <summary>
     /// 基类
@@ -15,10 +15,28 @@ namespace PanasonicInspect.Service.Services
     public class QueryServiceBase<T> where T : EntityCore
     {
         private readonly DbSet<T> _entities;
+        private readonly DbContext _context;
 
         protected QueryServiceBase(DbContext context)
         {
             _entities = context.Set<T>();
+            _context = context;
+        }
+        /// <summary>
+        /// 查询对象
+        /// </summary>
+        /// <returns></returns>
+        public IQueryable<TEntity> Query<TEntity>() where TEntity : EntityCore
+        {
+            return _context.Set<TEntity>().AsTracking();
+        }
+        /// <summary>
+        /// 查询对象不跟踪
+        /// </summary>
+        /// <returns></returns>
+        public IQueryable<TEntity> QueryNoTracking<TEntity>() where TEntity : EntityCore
+        {
+            return _context.Set<TEntity>().AsNoTracking();
         }
         /// <summary>
         /// 查询对象
@@ -90,8 +108,8 @@ namespace PanasonicInspect.Service.Services
             }
             return rsp;
         }
-        
-        
+
+
         /// <summary>
         /// [异步]执行结果
         /// </summary>

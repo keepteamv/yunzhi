@@ -1,4 +1,4 @@
-namespace PanasonicInspect.Service.Infrastructure
+namespace YunZhi.Service.Infrastructure
 {
     /// <summary>
     /// 读取分页列表请求基类
@@ -11,7 +11,7 @@ namespace PanasonicInspect.Service.Infrastructure
         /// </summary>
         /// <param name="pageIndex">页码</param>
         /// <param name="pageSize">页数据量</param>
-        public GetPageRequestBase(int pageIndex,int pageSize)
+        public GetPageRequestBase(int pageIndex, int pageSize)
         {
             PageIndex = pageIndex <= 0 ? 1 : pageIndex;
             PageSize = pageSize <= 0 ? 20 : pageSize;

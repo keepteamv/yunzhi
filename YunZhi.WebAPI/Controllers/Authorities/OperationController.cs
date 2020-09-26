@@ -6,20 +6,20 @@ using YunZhi.Service.Infrastructure.Attributes;
 using YunZhi.Service.Models.Authorities;
 using YunZhi.Service.Services.Authorities;
 using YunZhi.Service.Services.Authorities.Requests;
-using YunZhi.Service.Services.Authorities.Requests.Menus;
-using YunZhi.Service.Services.Authorities.Responses.Menus;
+using YunZhi.Service.Services.Authorities.Requests.Operations;
+using YunZhi.Service.Services.Authorities.Responses.Operations;
 
 namespace YunZhi.WebAPI.Controllers.Authorities
 {
     /// <summary>
-    /// 用户控制器
+    /// 控制器
     /// </summary>
-    public class MenuController : YunZhiControllerBase
+    public class OperationController : YunZhiControllerBase
     {
-        private readonly IMenuService _menuService;
-        public MenuController(IMenuService menuService)
+        private readonly IOperationService _operationService;
+        public OperationController(IOperationService operationService)
         {
-            _menuService = menuService;
+            _operationService = operationService;
         }
         /// <summary>
         /// 查询分页数据
@@ -27,43 +27,33 @@ namespace YunZhi.WebAPI.Controllers.Authorities
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost("getPages")]
-        [Permission("authority.getpages.menu")]
-        public async Task<ApiResult<Page<Menu>>> GetPages([FromBody] GetMenuPagesRequest request)
+        [Permission("authority.getpages.operation")]
+        public async Task<ApiResult<Page<Operation>>> GetPages([FromBody] GetOperationPagesRequest request)
         {
-            return await _menuService.GetPagesAsync(request);
+            return await _operationService.GetPagesAsync(request);
         }
 
         /// <summary>
-        /// 查询树形数据
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("getTreeList")]
-        [Permission("authority.gettreelist.menu")]
-        public async Task<ApiResult<IList<GetMenusResponse>>> GetTreeList()
-        {
-            return await _menuService.GetTreeListAsync();
-        }
-        /// <summary>
-        /// 根据角色Id读取菜单Id列表
+        /// 查询数据
         /// </summary>
         /// <param name="roleId"></param>
         /// <returns></returns>
-        [HttpGet("getMenuIdsByRoleId")]
-        [Permission("authority.getmenuidsbyroleid.menu")]
-        public async Task<ApiResult<IList<int>>> GetMenuIdsByRoleId(int roleId)
+        [HttpGet("getList")]
+        [Permission("authority.getlist.operation")]
+        public async Task<ApiResult<IList<GetOperationsResponse>>> GetList(string roleId)
         {
-            return await _menuService.GetMenuIdsByRoleIdAsync(roleId);
+            return await _operationService.GetListAsync(roleId);
         }
         /// <summary>
-        /// 根据用户Id读取菜单列表
+        /// 根据用户Id读取操作列表
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        [HttpGet("getTreeListByUserId")]
-        [Permission("authority.gettreelistbyuserid.menu")]
-        public async Task<ApiResult<IList<GetMenusResponse>>> GetTreeListByUserId(int userId)
+        [HttpGet("getOperationIdsByRoleId")]
+        [Permission("authority.getoperationidsbyroleid.operation")]
+        public async Task<ApiResult<IList<string>>> GetOperationIdsByRoleId(string userId)
         {
-            return await _menuService.GetTreeListByUserIdAsync(userId);
+            return await _operationService.GetOperationnCodesByUserIdAsync(userId);
         }
         /// <summary>
         /// 创建
@@ -71,10 +61,10 @@ namespace YunZhi.WebAPI.Controllers.Authorities
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost("create")]
-        [Permission("authority.create.menu")]
-        public async Task<ApiResult<string>> Create([FromBody] InsertMenuRequest request)
+        [Permission("authority.create.operation")]
+        public async Task<ApiResult<string>> Create([FromBody] InsertOperationRequest request)
         {
-            return await _menuService.InsertAsync(request);
+            return await _operationService.InsertAsync(request);
         }
         /// <summary>
         /// 更新
@@ -82,10 +72,10 @@ namespace YunZhi.WebAPI.Controllers.Authorities
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost("update")]
-        [Permission("authority.update.menu")]
-        public async Task<ApiResult<string>> Update([FromBody] UpdateMenuRequest request)
+        [Permission("authority.update.operation")]
+        public async Task<ApiResult<string>> Update([FromBody] UpdateOperationRequest request)
         {
-            return await _menuService.UpdateAsync(request);
+            return await _operationService.UpdateAsync(request);
         }
     }
 }

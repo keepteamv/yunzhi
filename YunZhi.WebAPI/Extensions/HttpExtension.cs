@@ -2,9 +2,9 @@ using System.Linq;
 using System.Web;
 using Microsoft.AspNetCore.Http;
 
-namespace PanasonicInspect.Extensions
+namespace YunZhi.WebAPI.Extensions
 {
-    
+
     public static class HttpExtension
     {
         /// <summary>

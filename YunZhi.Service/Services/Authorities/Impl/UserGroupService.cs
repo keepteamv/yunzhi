@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using YunZhi.Service.Infrastructure;
@@ -87,6 +88,28 @@ namespace YunZhi.Service.Services.Authorities.Impl
                     .HasWhere(request.Name, p => p.Name.Contains(request.Name))
                     .ToPageAsync(request.PageIndex, request.PageSize);
                 if (result.Items.Count == 0)
+                {
+                    rsp.Message = "暂无数据.";
+                    return rsp;
+                }
+                rsp.Message = "读取成功.";
+                rsp.Data = result;
+                rsp.Success = true;
+                return rsp;
+            });
+        }
+        /// <summary>
+        /// 读取数据列表
+        /// </summary>
+        /// <returns></returns>
+        public async Task<ApiResult<IList<UserGroup>>> GetListAsync()
+        {
+            return await QueryResultAsync(async query =>
+            {
+                var rsp = new ApiResult<IList<UserGroup>>();
+
+                var result = await query.ToListAsync();
+                if (result.Count == 0)
                 {
                     rsp.Message = "暂无数据.";
                     return rsp;

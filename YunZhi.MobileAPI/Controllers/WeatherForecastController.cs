@@ -7,9 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace YunZhi.MobileAPI.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class WeatherForecastController : YunZhiControllerBase
     {
         private static readonly string[] Summaries = new[]
         {
@@ -33,7 +31,7 @@ namespace YunZhi.MobileAPI.Controllers
                 TemperatureC = rng.Next(-20, 55),
                 Summary = Summaries[rng.Next(Summaries.Length)]
             })
-            .ToArray();
+                .ToArray();
         }
     }
 }

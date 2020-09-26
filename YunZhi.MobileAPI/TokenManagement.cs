@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace PanasonicInspect.MobileAPI
+namespace YunZhi.MobileAPI
 {
     public class TokenManagement
     {

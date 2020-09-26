@@ -3,9 +3,9 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
-using PanasonicInspect.Service.Services.Authorities.Responses;
+using YunZhi.Service.Services.Authorities.Responses.Users;
 
-namespace PanasonicInspect.Services
+namespace YunZhi.WebAPI.Services
 {
     public class Jwt
     {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using PanasonicInspect.MobileAPI.Middlewares;
+using YunZhi.MobileAPI.Middlewares;
 
-namespace PanasonicInspect.MobileAPI.Extensions
+namespace YunZhi.MobileAPI.Extensions
 {
     public static class ErrorHandlingExtensions
     {

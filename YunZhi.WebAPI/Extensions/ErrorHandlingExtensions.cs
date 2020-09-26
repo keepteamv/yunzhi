@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using PanasonicInspect.Middlewares;
+using YunZhi.WebAPI.Middlewares;
 
-namespace PanasonicInspect.Extensions
+namespace YunZhi.WebAPI.Extensions
 {
     public static class ErrorHandlingExtensions
     {

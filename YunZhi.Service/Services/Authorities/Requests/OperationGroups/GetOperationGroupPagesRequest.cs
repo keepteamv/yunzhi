@@ -1,11 +1,11 @@
 using System;
 using YunZhi.Service.Infrastructure;
 
-namespace YunZhi.Service.Services.Authorities.Requests.UserGroups
+namespace YunZhi.Service.Services.Authorities.Requests.OperationGroups
 {
-    public class GetUserGroupPagesRequest : GetPageRequestBase
+    public class GetOperationGroupPagesRequest : GetPageRequestBase
     {
-        public GetUserGroupPagesRequest(int pageIndex, int pageSize) : base(pageIndex, pageSize)
+        public GetOperationGroupPagesRequest(int pageIndex, int pageSize) : base(pageIndex, pageSize)
         {
         }
         /// <summary>
