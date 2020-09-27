@@ -66,7 +66,7 @@ const request = extend({
   credentials: 'include', // 默认请求是否带上cookie
   prefix: config.apiAddress,
 });
-request.interceptors.request.use((url, options) => {
+request.interceptors.request.use((_, options) => {
   return {
     options: {
       ...options,

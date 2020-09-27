@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -18,8 +16,6 @@ using YunZhi.Service.Infrastructure;
 using YunZhi.Service.Infrastructure.Configs;
 using YunZhi.Service.Infrastructure.Services;
 using YunZhi.Service.Models;
-using YunZhi.Service.Services.Authorities;
-using YunZhi.Service.Services.Authorities.Impl;
 using YunZhi.WebAPI.Extensions;
 
 namespace YunZhi.WebAPI
@@ -63,6 +59,7 @@ namespace YunZhi.WebAPI
             if (string.IsNullOrEmpty(connectionString))
             {
                 connectionString = Configuration.GetConnectionString("data");
+                // connectionString = "data source=47.107.168.17;database=yunzhi_data;uid=root;pwd=@123123qq;charset=utf8mb4;";
             }
             services.AddDbContext<YunZhiDbContext>(opt =>
                 opt.UseMySql(connectionString, p => p.MigrationsAssembly("YunZhi.WebAPI")));

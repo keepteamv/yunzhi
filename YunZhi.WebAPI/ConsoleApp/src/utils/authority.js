@@ -28,6 +28,10 @@ export function getAuthority(str) {
 
   return authority;
 }
+export function isLogin() {
+  const t = getToken();
+  return t !== undefined && t !== null && t !== '';
+}
 
 export function getToken() {
   return localStorage.getItem(`yunzhi_${platformKey}_user_token`);

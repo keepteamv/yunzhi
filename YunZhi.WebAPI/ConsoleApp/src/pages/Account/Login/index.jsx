@@ -1,10 +1,17 @@
 import { Alert, Checkbox, message } from 'antd';
 import React, { useState } from 'react';
 import { connect } from 'umi';
+import { isLogin } from '@/utils/authority'
+import { getPageQuery } from '@/utils/utils';
 import LoginForm from './components/Login';
 import styles from './style.less';
 
 const { Tab, UserName, Password, Submit } = LoginForm;
+const { redirect } = getPageQuery();
+
+if (isLogin()) {
+  window.location.href = redirect || '/';
+}
 
 const LoginMessage = ({ content }) => (
   <Alert

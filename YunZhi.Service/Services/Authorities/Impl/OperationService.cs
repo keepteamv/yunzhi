@@ -15,8 +15,10 @@ namespace YunZhi.Service.Services.Authorities.Impl
     [Component]
     public class OperationService : ServiceBase<Operation>, IOperationService
     {
-        public OperationService(YunZhiDbContext context) : base(context)
+        private readonly IRoleService _roleService;
+        public OperationService(YunZhiDbContext context, IRoleService roleService) : base(context)
         {
+            _roleService = roleService;
         }
         /// <summary>
         /// 新增
@@ -186,40 +188,17 @@ namespace YunZhi.Service.Services.Authorities.Impl
             return await QueryResultAsync(async query =>
             {
                 var rsp = new ApiResult<IList<string>>();
-                // 角色IDs
-                var roleIds = new List<string>();
-                // 读取用户组信息,获取用户都加入了哪些组
-                var userGroupIds = await QueryNoTracking<UserGroupUser>()
-                    .Where(p => p.UserId == userId)
-                    .Select(p => p.UserGroupId)
-                    .ToListAsync();
-                if (userGroupIds.Count > 0)
-                {
-                    // 读取用户组下的角色信息
-                    var roleIds1 = await QueryNoTracking<UserGroupRole>()
-                        .Where(p => userGroupIds.Contains(p.UserGroupId))
-                        .Select(p => p.RoleId)
-                        .ToListAsync();
-                    if (roleIds1.Count > 0)
-                    {
-                        roleIds.AddRange(roleIds1);
-                    }
-                }
-                // 读取角色信息
-                var roleIds2 = await QueryNoTracking<UserRole>()
-                    .Where(p => p.UserId == userId)
-                    .Select(p => p.RoleId)
-                    .ToListAsync();
-                if (roleIds2.Count > 0)
-                {
-                    roleIds.AddRange(roleIds2);
-                }
-                if (roleIds.Count == 0)
+                // 读取用户拥有的所有角色Id列表
+                var roleRes = await _roleService.GetAllIdsByUserIdAsync(userId);
+                // 如果未读取到
+                if (!roleRes.Success)
                 {
                     rsp.Message = "用户未绑定角色";
                     return rsp;
                 }
-                // 过滤数据
+                // 角色IDs
+                var roleIds = roleRes.Data;
+                // 过滤重复的角色Id数据
                 roleIds = roleIds.GroupBy(id => id).Select(p => p.FirstOrDefault()).ToList();
                 // 读取权限信息
                 var permissionIds = await QueryNoTracking<RolePermission>()

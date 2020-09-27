@@ -15,8 +15,10 @@ namespace YunZhi.Service.Services.Authorities.Impl
     [Component]
     public class MenuService : ServiceBase<Menu>, IMenuService
     {
-        public MenuService(YunZhiDbContext context) : base(context)
+        private readonly IRoleService _roleService;
+        public MenuService(YunZhiDbContext context, IRoleService roleService) : base(context)
         {
+            _roleService = roleService;
         }
         /// <summary>
         /// 新增
@@ -188,11 +190,17 @@ namespace YunZhi.Service.Services.Authorities.Impl
             {
                 var rsp = new ApiResult<IList<GetMenusResponse>>();
 
-                // 读取角色信息
-                var roleIds = await QueryNoTracking<UserRole>()
-                    .Where(p => p.UserId == userId)
-                    .Select(p => p.RoleId)
-                    .ToListAsync();
+                // 读取用户拥有的所有角色Id列表
+                var roleRes = await _roleService.GetAllIdsByUserIdAsync(userId);
+                // 如果未读取到
+                if (!roleRes.Success)
+                {
+                    rsp.Message = "用户未绑定角色";
+                    return rsp;
+                }
+                // 角色IDs
+                var roleIds = roleRes.Data;
+
                 // 读取权限信息
                 var permissionIds = await QueryNoTracking<RolePermission>()
                     .Include(p => p.Permission)

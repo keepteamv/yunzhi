@@ -197,5 +197,75 @@ namespace YunZhi.Service.Services.Authorities.Impl
                 return rsp;
             });
         }
+
+        /// <summary>
+        /// 根据用户ID读取所有角色ID，包含用户组和角色组
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task<ApiResult<IList<string>>> GetAllIdsByUserIdAsync(string userId)
+        {
+            return await QueryResultAsync(async query =>
+            {
+                var rsp = new ApiResult<IList<string>>();
+
+                // 角色IDs
+                var roleIds = new List<string>();
+                // 读取用户组信息,获取用户都加入了哪些用户组
+                var userGroupIds = await QueryNoTracking<UserGroupUser>()
+                    .Where(p => p.UserId == userId)
+                    .Select(p => p.UserGroupId)
+                    .ToListAsync();
+                if (userGroupIds.Count > 0)
+                {
+                    // 读取用户组下的角色信息
+                    var roleIds1 = await QueryNoTracking<UserGroupRole>()
+                        .Where(p => userGroupIds.Contains(p.UserGroupId))
+                        .Select(p => p.RoleId)
+                        .ToListAsync();
+                    if (roleIds1.Count > 0)
+                    {
+                        roleIds.AddRange(roleIds1);
+                    }
+                }
+                // 读取角色组信息，获取用户都加入了哪些角色组
+                var roleGroupId = await QueryNoTracking<RoleGroupUser>()
+                    .Where(p => p.UserId == userId)
+                    .Select(p => p.RoleGroupId)
+                    .ToListAsync();
+                // 如果存在角色组
+                if (roleGroupId.Count > 0)
+                {
+                    // 根据角色组读取其下的所有角色信息
+                    var roleIds1 = await QueryNoTracking<RoleGroupRole>()
+                        .Where(p => roleGroupId.Contains(p.RoleGroupId))
+                        .Select(p => p.RoleId)
+                        .ToListAsync();
+                    if (roleIds1.Count > 0)
+                    {
+                        roleIds.AddRange(roleIds1);
+                    }
+                }
+                // 读取角色信息
+                var roleIds2 = await QueryNoTracking<UserRole>()
+                    .Where(p => p.UserId == userId)
+                    .Select(p => p.RoleId)
+                    .ToListAsync();
+                if (roleIds2.Count > 0)
+                {
+                    roleIds.AddRange(roleIds2);
+                }
+                // 如果未绑定角色
+                if (roleIds.Count == 0)
+                {
+                    rsp.Message = "暂无数据.";
+                    return rsp;
+                }
+                rsp.Message = "读取成功.";
+                rsp.Data = roleIds;
+                rsp.Success = true;
+                return rsp;
+            });
+        }
     }
 }
