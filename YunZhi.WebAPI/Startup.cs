@@ -59,7 +59,6 @@ namespace YunZhi.WebAPI
             if (string.IsNullOrEmpty(connectionString))
             {
                 connectionString = Configuration.GetConnectionString("data");
-                // connectionString = "data source=47.107.168.17;database=yunzhi_data;uid=root;pwd=@123123qq;charset=utf8mb4;";
             }
             services.AddDbContext<YunZhiDbContext>(opt =>
                 opt.UseMySql(connectionString, p => p.MigrationsAssembly("YunZhi.WebAPI")));
