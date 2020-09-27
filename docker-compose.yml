@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  yunzhi.webapi:
+    image: ${DOCKER_REGISTRY-}yunzhi
+    build:
+      context: .
+      dockerfile: YunZhi.WebAPI/Dockerfile
