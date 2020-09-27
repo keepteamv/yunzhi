@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using YunZhi.Service.Infrastructure;
@@ -26,24 +27,25 @@ namespace YunZhi.Service.Services.Authorities.Impl
             return await ExecuteResultAsync(async query =>
             {
                 var rsp = new ApiResult<string>();
-                var user = new UserGroup
+                var entity = new UserGroup
                 {
                     Name = request.Name,
                     Status = request.Status,
                     Remarks = request.Remarks
                 };
                 // 新增
-                await RegisterNewAsync(user);
+                await RegisterNewAsync(entity);
                 // 提交
                 var flag = await CommitAsync();
 
                 rsp.Message = flag ? "新增成功" : "新增失败";
                 rsp.Success = flag;
+                rsp.Data = entity.Id;
                 return rsp;
             });
         }
         /// <summary>
-        /// 修改用户信息
+        /// 修改
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
@@ -52,23 +54,24 @@ namespace YunZhi.Service.Services.Authorities.Impl
             return await ExecuteResultAsync(async query =>
             {
                 var rsp = new ApiResult<string>();
-                var user = await query.FirstOrDefaultAsync(p => p.Id == request.Id);
-                if (user == null)
+                var entity = await query.FirstOrDefaultAsync(p => p.Id == request.Id);
+                if (entity == null)
                 {
                     rsp.Message = "找不到要修改的信息.";
                     return rsp;
                 }
 
-                user.Name = request.Name;
-                user.Remarks = request.Remarks;
-                user.Status = request.Status;
+                entity.Name = request.Name;
+                entity.Remarks = request.Remarks;
+                entity.Status = request.Status;
                 // 修改
-                RegisterDirty(user);
+                RegisterDirty(entity);
                 // 提交
                 var flag = await CommitAsync();
 
                 rsp.Message = flag ? "更新成功" : "更新失败";
                 rsp.Success = flag;
+                rsp.Data = entity.Id;
                 return rsp;
             });
         }
@@ -109,6 +112,32 @@ namespace YunZhi.Service.Services.Authorities.Impl
                 var rsp = new ApiResult<IList<UserGroup>>();
 
                 var result = await query.ToListAsync();
+                if (result.Count == 0)
+                {
+                    rsp.Message = "暂无数据.";
+                    return rsp;
+                }
+                rsp.Message = "读取成功.";
+                rsp.Data = result;
+                rsp.Success = true;
+                return rsp;
+            });
+        }
+        /// <summary>
+        /// 根据用户ID读取组ID
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task<ApiResult<IList<string>>> GetIdsByUserIdAsync(string userId)
+        {
+            return await QueryResultAsync(async query =>
+            {
+                var rsp = new ApiResult<IList<string>>();
+
+                var result = await QueryNoTracking<UserGroupUser>()
+                    .Where(p => p.UserId == userId)
+                    .Select(p => p.UserGroupId)
+                    .ToListAsync();
                 if (result.Count == 0)
                 {
                     rsp.Message = "暂无数据.";

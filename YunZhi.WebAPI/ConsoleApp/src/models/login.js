@@ -1,7 +1,7 @@
 import { stringify } from 'querystring';
 import { history } from 'umi';
 import { fakeAccountLogin } from '@/services/login';
-import { setAuthority, setToken, setUser, clearToken, clearUser, clearMenus } from '@/utils/authority';
+import { setPermissions, setToken, setUser, clearToken, clearUser, clearMenus, clearPermissions } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
 
 const Model = {
@@ -20,7 +20,8 @@ const Model = {
 
       if (res.success) {
         // TODO 
-        setAuthority('admin');
+        // setAuthority('admin');
+        setPermissions(res.data.permissions);
         setToken(res.data.token);
         setUser(res.data);
         clearMenus();
@@ -53,6 +54,7 @@ const Model = {
       clearToken();
       clearUser();
       clearMenus();
+      clearPermissions();
       if (window.location.pathname !== '/account/login' && !redirect) {
         history.replace({
           pathname: '/account/login',

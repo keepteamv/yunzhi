@@ -5,16 +5,16 @@ using YunZhi.Service.Infrastructure;
 using YunZhi.Service.Infrastructure.Attributes;
 using YunZhi.Service.Models.Authorities;
 using YunZhi.Service.Services.Authorities;
-using YunZhi.Service.Services.Authorities.Requests.UserGroups;
+using YunZhi.Service.Services.Authorities.Requests.RoleGroups;
 
 namespace YunZhi.WebAPI.Controllers.Authorities
 {
-    public class UserGroupController : YunZhiControllerBase
+    public class RoleGroupController : YunZhiControllerBase
     {
-        private readonly IUserGroupService _userGroupService;
-        public UserGroupController(IUserGroupService userGroupService)
+        private readonly IRoleGroupService _roleGroupService;
+        public RoleGroupController(IRoleGroupService roleGroupService)
         {
-            _userGroupService = userGroupService;
+            _roleGroupService = roleGroupService;
         }
         /// <summary>
         /// 查询分页数据
@@ -22,21 +22,20 @@ namespace YunZhi.WebAPI.Controllers.Authorities
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost("getPages")]
-        [Permission("webapi.getpages.usergroup")]
-        public async Task<ApiResult<Page<UserGroup>>> GetPages([FromBody] GetUserGroupPagesRequest request)
+        [Permission("authority.getpages.rolegroup")]
+        public async Task<ApiResult<Page<RoleGroup>>> GetPages([FromBody] GetRoleGroupPagesRequest request)
         {
-            return await _userGroupService.GetPagesAsync(request);
+            return await _roleGroupService.GetPagesAsync(request);
         }
         /// <summary>
-        /// 查询分页数据
+        /// 查询数据列表
         /// </summary>
-        /// <param name="request"></param>
         /// <returns></returns>
         [HttpGet("getList")]
-        [Permission("webapi.getlist.usergroup")]
-        public async Task<ApiResult<IList<UserGroup>>> GetList()
+        [Permission("authority.getlist.rolegroup")]
+        public async Task<ApiResult<IList<RoleGroup>>> GetList()
         {
-            return await _userGroupService.GetListAsync();
+            return await _roleGroupService.GetListAsync();
         }
         /// <summary>
         /// 创建
@@ -44,10 +43,10 @@ namespace YunZhi.WebAPI.Controllers.Authorities
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost("create")]
-        [Permission("webapi.create.usergroup")]
-        public async Task<ApiResult<string>> Create([FromBody] InsertUserGroupRequest request)
+        [Permission("authority.create.rolegroup")]
+        public async Task<ApiResult<string>> Create([FromBody] InsertRoleGroupRequest request)
         {
-            return await _userGroupService.InsertAsync(request);
+            return await _roleGroupService.InsertAsync(request);
         }
         /// <summary>
         /// 更新
@@ -55,10 +54,21 @@ namespace YunZhi.WebAPI.Controllers.Authorities
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost("update")]
-        [Permission("webapi.update.usergroup")]
-        public async Task<ApiResult<string>> Update([FromBody] UpdateUserGroupRequest request)
+        [Permission("authority.update.rolegroup")]
+        public async Task<ApiResult<string>> Update([FromBody] UpdateRoleGroupRequest request)
         {
-            return await _userGroupService.UpdateAsync(request);
+            return await _roleGroupService.UpdateAsync(request);
+        }
+        /// <summary>
+        /// 根据角色ID读取组ID
+        /// </summary>
+        /// <param name="roleId"></param>
+        /// <returns></returns>
+        [HttpGet("getIdsByRoleId")]
+        [Permission("authority.getidsbyroleid.rolegroup")]
+        public async Task<ApiResult<IList<string>>> GetIdsByRoleId(string roleId)
+        {
+            return await _roleGroupService.GetIdsByRoleIdAsync(roleId);
         }
     }
 }

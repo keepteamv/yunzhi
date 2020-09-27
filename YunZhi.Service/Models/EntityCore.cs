@@ -13,17 +13,8 @@ namespace YunZhi.Service.Models
         /// </summary>
         [Required]
         [MaxLength(32)]
-        public string Id { get; set; } = ObjectId.GenerateNewStringId();
-        /// <summary>
-        /// 自增
-        /// </summary>
         [Key]
-        public int Sequence { get; set; }
-        // /// <summary>
-        // /// GUID
-        // /// </summary>
-        // /// <returns></returns>
-        // public string GUID { get; set; } = Guid.NewGuid().ToString();
+        public string Id { get; set; } = ObjectId.GenerateNewStringId();
         /// <summary>
         /// 创建时间
         /// </summary>

@@ -49,11 +49,11 @@ namespace YunZhi.WebAPI.Controllers.Authorities
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        [HttpGet("getOperationIdsByRoleId")]
-        [Permission("authority.getoperationidsbyroleid.operation")]
-        public async Task<ApiResult<IList<string>>> GetOperationIdsByRoleId(string userId)
+        [HttpGet("getOperationnCodes")]
+        [Permission("authority.getoperationcodes.operation")]
+        public async Task<ApiResult<IList<string>>> GetOperationnCodes()
         {
-            return await _operationService.GetOperationnCodesByUserIdAsync(userId);
+            return await _operationService.GetOperationnCodesByUserIdAsync(UserId);
         }
         /// <summary>
         /// 创建

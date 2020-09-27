@@ -2,6 +2,8 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
+        <DockerComposeProjectPath>../docker-compose.dcproj</DockerComposeProjectPath>
+        <UserSecretsId>e3d66994-fc99-4239-be8a-a1a97624d568</UserSecretsId>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(RunConfiguration)' == 'YunZhi.WebAPI' " />
     <PropertyGroup Condition=" '$(RunConfiguration)' == 'YunZhi' " />

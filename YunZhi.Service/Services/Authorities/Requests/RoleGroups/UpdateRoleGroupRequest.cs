@@ -1,9 +1,9 @@
 using System;
 using YunZhi.Service.Models;
 
-namespace YunZhi.Service.Services.Authorities.Requests.UserGroups
+namespace YunZhi.Service.Services.Authorities.Requests.RoleGroups
 {
-    public class UpdateUserGroupRequest
+    public class UpdateRoleGroupRequest
     {
         /// <summary>
         /// ID

@@ -40,28 +40,28 @@ const TableList = (props) => {
   // 获取更多操作菜单
   const getOperationMenus = record => {
     return (<Menu>
-      {canOperation(path, '管理员') ?
+      {canOperation('管理员') ?
         <MenuItem onClick={() => {
           // 
         }} icon={<FormOutlined />}>
           <span>管理员列表</span>
         </MenuItem> : null
       }
-      {canOperation(path, '经营者收支记录管理') ?
+      {canOperation('经营者收支记录管理') ?
         <MenuItem onClick={() => {
           history.push(`/manager/income-and-expense?managerId=${record.id}`)
         }} icon={<UnorderedListOutlined />}>
           <span>收支记录</span>
         </MenuItem> : null
       }
-      {canOperation(path, '仓库管理') ?
+      {canOperation('仓库管理') ?
         <MenuItem onClick={() => {
           // 
         }} icon={<FormOutlined />}>
           <span>仓库管理</span>
         </MenuItem> : null
       }
-      {canOperation(path, '编辑负责人') ?
+      {canOperation('编辑负责人') ?
         <MenuItem onClick={() => {
           handleUpdatePersonInChargeModalVisible(true);
           setPersonInChargeFormValues({
@@ -74,14 +74,14 @@ const TableList = (props) => {
           <span>编辑负责人</span>
         </MenuItem> : null
       }
-      {canOperation(path, '更新提现周期') ?
+      {canOperation('更新提现周期') ?
         <MenuItem onClick={() => {
           // 
         }} icon={<FormOutlined />}>
           <span>更新提现周期</span>
         </MenuItem> : null
       }
-      {canOperation(path, '更新平台管理费率') ?
+      {canOperation('更新平台管理费率') ?
         <MenuItem onClick={() => {
           // 
         }} icon={<FormOutlined />}>
@@ -214,7 +214,7 @@ const TableList = (props) => {
             <Popconfirm
               placement="right"
               title={`确定要${entity.status === 1 ? '禁用' : '启用'}吗？`}
-              disabled={!canOperation(path, '更新状态')}
+              disabled={!canOperation('更新状态')}
               onConfirm={() => {
                 updateStatusRequest.run({
                   id: entity.id,
@@ -229,7 +229,7 @@ const TableList = (props) => {
                 checkedChildren="启用"
                 unCheckedChildren="禁用"
                 checked={checked}
-                disabled={!canOperation(path, '更新状态')}
+                disabled={!canOperation('更新状态')}
               />
             </Popconfirm>
           </>
@@ -280,7 +280,7 @@ const TableList = (props) => {
       dataIndex: 'option',
       valueType: 'option',
       render: (_, record) => [
-        <Access key="key1" accessible={canOperation(path, '设备(门店)管理')}>
+        <Access key="key1" accessible={canOperation('设备(门店)管理')}>
           <Link to={`/manager/equipment?managerId=${record.id}`}>设备(门店)</Link>
         </Access>,
         getOperationMenus(record) !== null ? <Dropdown overlay={() => getOperationMenus(record)} placement="bottomCenter" arrow>
@@ -299,7 +299,7 @@ const TableList = (props) => {
         actionRef={actionRef}
         rowKey="id"
         toolBarRender={() => [
-          <Access accessible={canOperation(path, '新增')}>
+          <Access accessible={canOperation('新增')}>
             <Button type="primary" onClick={() => handleModalVisible(true)}>
               <PlusOutlined /> 创建
             </Button>

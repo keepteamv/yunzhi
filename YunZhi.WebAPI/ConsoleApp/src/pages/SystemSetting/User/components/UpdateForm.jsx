@@ -1,8 +1,7 @@
 import React from 'react';
 import { Modal, Spin, Row, Col } from 'antd';
 import ProForm, {
-  ProFormText,
-  ProFormTextArea
+  ProFormText
   // eslint-disable-next-line import/no-extraneous-dependencies
 } from '@ant-design/pro-form';
 import pattern from '@/utils/pattern';
@@ -54,7 +53,7 @@ const UpdateForm = props => {
             </Col>
             <Col span={12}>
               <ProFormText
-                name="mobile"
+                name="phoneNumber"
                 label="手机号"
                 placeholder="请输入手机号"
                 fieldProps={{
@@ -84,33 +83,16 @@ const UpdateForm = props => {
             </Col>
             <Col span={12}>
               <ProFormText
-                name="tel"
-                label="座机号"
-                placeholder="请输入座机号"
+                name="password"
+                label="密码"
+                tip="不输入则默认为不进行修改密码！"
+                placeholder="请输入登录密码"
                 fieldProps={{
                   allowClear: true
                 }}
-                rules={[{
-                  message: '请输入正确的座机号！',
-                  pattern: pattern.landline
-                }]}
               />
             </Col>
           </Row>
-          <ProFormText
-            name="password"
-            label="密码"
-            tip="不输入则默认为不进行修改密码！"
-            placeholder="请输入登录密码"
-            fieldProps={{
-              allowClear: true
-            }}
-          />
-          <ProFormTextArea
-            name="remark"
-            label="备注"
-            placeholder="请输入备注"
-          />
         </ProForm>
       </Spin>
     </Modal>

@@ -38,6 +38,17 @@ export function setToken(token) {
 export function clearToken() {
   return localStorage.removeItem(`yunzhi_${platformKey}_user_token`);
 }
+export function getPermissions() {
+  const result = localStorage.getItem(`yunzhi_${platformKey}_user_permissions`) || '[]';
+  return JSON.parse(result);
+}
+export function setPermissions(data) {
+  const u = JSON.stringify(data);
+  return localStorage.setItem(`yunzhi_${platformKey}_user_permissions`, u);
+}
+export function clearPermissions() {
+  return localStorage.removeItem(`yunzhi_${platformKey}_user_permissions`);
+}
 
 export function getUser() {
   const result = localStorage.getItem(`yunzhi_${platformKey}_user`) || '{}';

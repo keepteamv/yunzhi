@@ -82,7 +82,7 @@ const BasicLayout = (props) => {
     // 读取数据
     let menus = getMenus();
     if (menus.length === 0) {
-      const res = await request('/api/Menu/getTreeList', {
+      const res = await request('/api/Menu/getTreeListByUser', {
         method: 'GET'
       });
       if (res.success) {

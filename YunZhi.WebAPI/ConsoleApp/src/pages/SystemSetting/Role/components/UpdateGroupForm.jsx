@@ -2,15 +2,16 @@ import React from 'react';
 import { Modal } from 'antd';
 import ProForm, {
   ProFormText,
-  ProFormTextArea
+  ProFormTextArea,
+  ProFormSwitch
 } from '@ant-design/pro-form';
 
-const UpdateForm = props => {
+const UpdateGroupForm = props => {
   const { modalVisible, onCancel, onSubmit, values } = props;
   return (
     <Modal
       destroyOnClose
-      title="更新角色"
+      title="更新角色组"
       visible={modalVisible}
       onCancel={() => onCancel()}
       footer={null}
@@ -19,6 +20,7 @@ const UpdateForm = props => {
         // 提交
         onSubmit({
           id: values.id,
+          status: value.status ? 1 : 2,
           ...value
         });
       }} initialValues={{ ...values }}>
@@ -33,9 +35,10 @@ const UpdateForm = props => {
           label="备注"
           placeholder="请输入备注"
         />
+        <ProFormSwitch name="status" label="状态" />
       </ProForm>
     </Modal>
   );
 };
 
-export default UpdateForm;
+export default UpdateGroupForm;

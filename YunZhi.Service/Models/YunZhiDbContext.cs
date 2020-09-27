@@ -20,6 +20,9 @@ namespace YunZhi.Service.Models
             modelBuilder.Entity<Permission>().ToTable("Permissions");
             modelBuilder.Entity<PermissionMenu>().ToTable("PermissionMenus");
             modelBuilder.Entity<Role>().ToTable("Roles");
+            modelBuilder.Entity<RoleGroup>().ToTable("RoleGroups");
+            modelBuilder.Entity<RoleGroupRole>().ToTable("RoleGroupRoles");
+            modelBuilder.Entity<RoleGroupUser>().ToTable("RoleGroupUsers");
             modelBuilder.Entity<RolePermission>().ToTable("RolePermissions");
             modelBuilder.Entity<User>().ToTable("Users");
             modelBuilder.Entity<UserGroup>().ToTable("UserGroups");

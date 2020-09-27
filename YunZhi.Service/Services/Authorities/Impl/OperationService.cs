@@ -38,7 +38,8 @@ namespace YunZhi.Service.Services.Authorities.Impl
                     OperationGroupId = request.OperationGroupId,
                     Name = request.Name,
                     Code = request.Code,
-                    Tips = request.Tips
+                    Tips = request.Tips,
+                    Sort = request.Sort,
                 };
                 // 新增
                 await RegisterNewAsync(entity);
@@ -47,11 +48,12 @@ namespace YunZhi.Service.Services.Authorities.Impl
 
                 rsp.Message = flag ? "新增成功" : "新增失败";
                 rsp.Success = flag;
+                rsp.Data = entity.Id;
                 return rsp;
             });
         }
         /// <summary>
-        /// 修改用户信息
+        /// 修改
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
@@ -71,6 +73,7 @@ namespace YunZhi.Service.Services.Authorities.Impl
                 entity.Name = request.Name;
                 entity.Code = request.Code;
                 entity.Tips = request.Tips;
+                entity.Sort = request.Sort;
                 // 修改
                 RegisterDirty(entity);
                 // 提交
@@ -78,6 +81,7 @@ namespace YunZhi.Service.Services.Authorities.Impl
 
                 rsp.Message = flag ? "更新成功" : "更新失败";
                 rsp.Success = flag;
+                rsp.Data = entity.Id;
                 return rsp;
             });
         }
@@ -94,6 +98,7 @@ namespace YunZhi.Service.Services.Authorities.Impl
 
                 var result = await query
                     .HasWhere(request.Name, p => p.Name.Contains(request.Name))
+                    .OrderBy(p => p.Sort)
                     .ToPageAsync(request.PageIndex, request.PageSize);
                 if (result.Items.Count == 0)
                 {
@@ -117,8 +122,9 @@ namespace YunZhi.Service.Services.Authorities.Impl
             {
                 var rsp = new ApiResult<IList<GetOperationsResponse>>();
 
-                var result = await query
-                    .Include(p => p.OperationGroup)
+                var result = await QueryNoTracking<OperationGroup>()
+                    .Include(p => p.Operations)
+                    .OrderBy(p => p.Sort)
                     .ToListAsync();
                 if (result.Count == 0)
                 {
@@ -142,24 +148,28 @@ namespace YunZhi.Service.Services.Authorities.Impl
                         .Select(p => p.OperationId)
                         .ToListAsync();
                 }
-                // 处理结果
-                var data = result.GroupBy(p => p.OperationGroupId).Select(group =>
-                  {
-                      var item = group.FirstOrDefault();
-                      var d = new GetOperationsResponse
-                      {
-                          OperationGroupId = item.OperationGroupId,
-                          Name = item.OperationGroup.Name,
-                          Children = group.Select(p => new GetOperationsResponse
-                          {
-                              Name = p.Name,
-                              Code = p.Code,
-                              Tips = p.Tips,
-                              Checked = operationIds.Any(id => id == p.Id)
-                          }).ToList()
-                      };
-                      return d;
-                  }).ToList();
+                var data = result.Select(item => new GetOperationsResponse
+                {
+                    OperationGroupId = item.Id,
+                    Name = item.Name,
+                    Value = item.Id,
+                    Label = item.Name,
+                    CheckedList = item.Operations
+                        .Where(p => operationIds.Contains(p.Id))
+                        .Select(p => p.Id)
+                        .ToList(),
+                    Children = item.Operations.Select(p => new GetOperationsResponse
+                    {
+                        Id = p.Id,
+                        OperationGroupId = item.Id,
+                        Label = p.Name,
+                        Value = p.Id,
+                        Name = p.Name,
+                        Code = p.Code,
+                        Tips = p.Tips,
+                        //Checked = operationIds.Any(id => id == p.Id)
+                    }).ToList()
+                }).ToList();
 
                 rsp.Message = "读取成功.";
                 rsp.Data = data;
@@ -227,17 +237,23 @@ namespace YunZhi.Service.Services.Authorities.Impl
                 var result = await QueryNoTracking<PermissionOperation>()
                     .Include(p => p.Operation)
                     .Where(p => permissionIds.Contains(p.PermissionId))
-                    .Select(p => p.Operation)
-                    .GroupBy(p => p.Id) // 使用操作ID分组，用于过滤重复数据
-                    .Select(p => p.FirstOrDefault().Code) // 过滤重复数据
+                    .Select(p => p.Operation.Code)
                     .ToListAsync();
                 if (result.Count == 0)
                 {
                     rsp.Message = "暂无数据.";
                     return rsp;
                 }
+                var items = new List<string>();
+                // 分割数据，处理前: webapi.xx.cc,webapi.sss.cc ,处理后：["webapi.xx.cc","webapi.sss.cc"]
+                foreach (var item in result)
+                {
+                    items.AddRange(item.Split(','));
+                }
+                // 使用操作ID分组，过滤重复数据
+                var data = items.GroupBy(code => code).Select(p => p.FirstOrDefault()).ToList();
                 rsp.Message = "读取成功.";
-                rsp.Data = result;
+                rsp.Data = data;
                 rsp.Success = true;
                 return rsp;
             });

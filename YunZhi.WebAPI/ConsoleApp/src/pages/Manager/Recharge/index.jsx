@@ -117,7 +117,7 @@ const TableList = (routes) => {
     dataIndex: 'option',
     valueType: 'option',
     render: (_, record) => [
-      <Access key="key1" accessible={canOperation(path, '确认到账') && record.rechargeStatus === 0}>
+      <Access key="key1" accessible={canOperation('确认到账') && record.rechargeStatus === 0}>
         <Popconfirm
           title={`是否确认[${record.managerName}]转帐的${record.amountOfMoney}元已到账？`}
           onConfirm={() => {

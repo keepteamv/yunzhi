@@ -6,9 +6,9 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Threading.Tasks;
 using System.Runtime.Serialization;
-using LRMTC.Infrastructure.Helpers;
+using YunZhi.Service.Infrastructure.Configs;
 
-namespace LRMTC.Infrastructure.Services
+namespace YunZhi.Service.Infrastructure.Services
 {
     /// <summary>
     /// Redis服务
@@ -26,7 +26,7 @@ namespace LRMTC.Infrastructure.Services
         /// <summary>
         /// 默认的key值（用来当作RedisKey的前缀）
         /// </summary>
-        public string DefaultKey { get; private set; } = "gzquinary";
+        public string DefaultKey { get; private set; } = "yunzhi";
         /// <summary>
         /// 锁
         /// </summary>

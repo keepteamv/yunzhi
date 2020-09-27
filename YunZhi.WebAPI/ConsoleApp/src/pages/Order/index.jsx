@@ -401,7 +401,7 @@ const TableList = (props) => {
     width: 127,
     render: (_, record) => (
       <>
-        <Access accessible={canOperation(path, '可退单')}>
+        <Access accessible={canOperation('可退单')}>
           <Button
             style={{ marginRight: 7 }}
             size='small'

@@ -69,7 +69,7 @@ const MakeQueueTable = props => {
     width: 130,
     render: (_, row) => (
       <>
-        <Access accessible={canOperation(path, '可退单') && row.makeQueueStatus === 1}>
+        <Access accessible={canOperation('可退单') && row.makeQueueStatus === 1}>
           <Tooltip title="推送至门店终端">
             <Button
               style={{ ...oStyle }}
@@ -82,7 +82,7 @@ const MakeQueueTable = props => {
             </Button>
           </Tooltip>
         </Access>
-        <Access accessible={canOperation(path, '可退单') && row.makeQueueStatus === 0}>
+        <Access accessible={canOperation('可退单') && row.makeQueueStatus === 0}>
           <Tooltip title="更新">
             <Button
               style={{ ...oStyle }}
@@ -95,7 +95,7 @@ const MakeQueueTable = props => {
             </Button>
           </Tooltip>
         </Access>
-        <Access accessible={canOperation(path, '可退单') && (row.makeQueueStatus === 0 || row.makeQueueStatus === 1 || row.makeQueueStatus === 2)}>
+        <Access accessible={canOperation('可退单') && (row.makeQueueStatus === 0 || row.makeQueueStatus === 1 || row.makeQueueStatus === 2)}>
           <Tooltip title="取消制作">
             <Button
               size='small'

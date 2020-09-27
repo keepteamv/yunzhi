@@ -15,6 +15,11 @@ namespace YunZhi.Service.Models.Authorities
         /// <value></value>
         public string Name { get; set; }
         /// <summary>
+        /// 排序字段
+        /// </summary>
+        /// <value></value>
+        public int Sort { get; set; }
+        /// <summary>
         /// 操作菜单
         /// </summary>
         /// <value></value>

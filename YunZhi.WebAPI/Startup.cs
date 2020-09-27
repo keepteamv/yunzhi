@@ -15,6 +15,8 @@ using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using YunZhi.Service.Infrastructure;
+using YunZhi.Service.Infrastructure.Configs;
+using YunZhi.Service.Infrastructure.Services;
 using YunZhi.Service.Models;
 using YunZhi.Service.Services.Authorities;
 using YunZhi.Service.Services.Authorities.Impl;
@@ -34,6 +36,13 @@ namespace YunZhi.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            ConfigSettings.RedisConfig = new RedisConfig()
+            {
+                Address = Configuration.GetSection("RedisConfig")["Address"],
+                Password = Configuration.GetSection("RedisConfig")["Password"],
+                Port = Configuration.GetSection("RedisConfig")["Port"]
+            };
+
             services.AddDbContext<YunZhiDbContext>(opt =>
                 opt.UseMySql(Configuration.GetConnectionString("data"), p => p.MigrationsAssembly("YunZhi.WebAPI")));
             // 添加Swagger
@@ -86,8 +95,8 @@ namespace YunZhi.WebAPI
             });
             #endregion
 
-            // DI
-            // services.AddScoped<IUserService, UserService>();
+            // 注册Redis
+            services.AddScoped<RedisService, RedisService>();
 
             // 注册业务组件
             services.RegisterBusinessComponents(new[]{
@@ -111,17 +120,16 @@ namespace YunZhi.WebAPI
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "API Demo v1");
             });
+            app.UseStaticFiles();
             app.UseErrorHandling();
             app.UseAuthentication();
             app.UseRouting();
             app.UseCors();
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
-            app.UseStaticFiles();
         }
     }
 }

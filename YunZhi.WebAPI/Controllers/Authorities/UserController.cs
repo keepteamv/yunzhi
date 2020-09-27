@@ -26,7 +26,7 @@ namespace YunZhi.WebAPI.Controllers.Authorities
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost("getPages")]
-        [Permission("webapi.get.user")]
+        [Permission("authority.getpages.user")]
         public async Task<ApiResult<Page<User>>> GetPages([FromBody] GetUserPagesRequest request)
         {
             return await _userService.GetPagesAsync(request);
@@ -38,7 +38,7 @@ namespace YunZhi.WebAPI.Controllers.Authorities
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost("create")]
-        [Permission("webapi.create.user")]
+        [Permission("authority.create.user")]
         public async Task<ApiResult<string>> Create([FromBody] InsertUserRequest request)
         {
             // 密码加密
@@ -51,7 +51,7 @@ namespace YunZhi.WebAPI.Controllers.Authorities
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost("update")]
-        [Permission("webapi.update.user")]
+        [Permission("authority.update.user")]
         public async Task<ApiResult<string>> Update([FromBody] UpdateUserRequest request)
         {
             if (!string.IsNullOrEmpty(request.Password))
@@ -60,6 +60,28 @@ namespace YunZhi.WebAPI.Controllers.Authorities
                 request.Password = PasswordHash.PasswordHash.CreateHash(request.Password);
             }
             return await _userService.UpdateAsync(request);
+        }
+        /// <summary>
+        /// 保存用户组与用户关联信息
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost("saveUserGroupUser")]
+        [Permission("authority.saveusergroupuser.user")]
+        public async Task<ApiResult<string>> SaveUserGroupUser([FromBody] SaveUserGroupUserRequest request)
+        {
+            return await _userService.SaveUserGroupUserAsync(request);
+        }
+        /// <summary>
+        /// 保存用户与角色关联信息
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost("saveUserRole")]
+        [Permission("authority.saveuserrole.user")]
+        public async Task<ApiResult<string>> SaveUserRole([FromBody] SaveUserRoleRequest request)
+        {
+            return await _userService.SaveUserRoleAsync(request);
         }
     }
 }

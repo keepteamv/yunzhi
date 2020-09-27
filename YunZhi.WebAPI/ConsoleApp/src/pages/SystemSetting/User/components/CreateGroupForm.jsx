@@ -12,7 +12,7 @@ const CreateGroupForm = props => {
   return (
     <Modal
       destroyOnClose
-      title="创建角色组"
+      title="创建用户组"
       visible={modalVisible}
       onCancel={() => onCancel()}
       footer={null}
@@ -25,8 +25,8 @@ const CreateGroupForm = props => {
         <ProFormText
           name="name"
           label="名称"
-          placeholder="请输入角色组名称"
-          rules={[{ required: true, message: '请输入角色组名称！' }]}
+          placeholder="请输入用户组名称"
+          rules={[{ required: true, message: '请输入用户组名称！' }]}
         />
         <ProFormTextArea
           name="remarks"

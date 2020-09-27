@@ -157,7 +157,7 @@ const TableList = (routes) => {
     fixed: 'right',
     render: (_, record) => (
       <>
-        <Access accessible={canOperation(path, '处理中')}>
+        <Access accessible={canOperation('处理中')}>
           <Popconfirm
             title="确认要设置为处理中吗？"
             onConfirm={() => {
@@ -187,7 +187,7 @@ const TableList = (routes) => {
             </Button>
           </Popconfirm>
         </Access>
-        <Access accessible={canOperation(path, '汇款结果')}>
+        <Access accessible={canOperation('汇款结果')}>
           <Button
             size='small'
             // 不为“处理中”状态，则禁用按钮

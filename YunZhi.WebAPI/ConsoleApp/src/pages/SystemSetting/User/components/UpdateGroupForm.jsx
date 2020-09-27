@@ -11,7 +11,7 @@ const UpdateGroupForm = props => {
   return (
     <Modal
       destroyOnClose
-      title="更新角色组"
+      title="更新用户组"
       visible={modalVisible}
       onCancel={() => onCancel()}
       footer={null}
@@ -27,8 +27,8 @@ const UpdateGroupForm = props => {
         <ProFormText
           name="name"
           label="名称"
-          placeholder="请输入角色名称"
-          rules={[{ required: true, message: '请输入角色名称！' }]}
+          placeholder="请输入用户名称"
+          rules={[{ required: true, message: '请输入用户名称！' }]}
         />
         <ProFormTextArea
           name="remarks"

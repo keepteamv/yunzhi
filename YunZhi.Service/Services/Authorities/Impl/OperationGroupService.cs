@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using YunZhi.Service.Infrastructure;
@@ -29,6 +30,7 @@ namespace YunZhi.Service.Services.Authorities.Impl
                 var entity = new OperationGroup
                 {
                     Name = request.Name,
+                    Sort = request.Sort,
                 };
                 // 新增
                 await RegisterNewAsync(entity);
@@ -37,11 +39,12 @@ namespace YunZhi.Service.Services.Authorities.Impl
 
                 rsp.Message = flag ? "新增成功" : "新增失败";
                 rsp.Success = flag;
+                rsp.Data = entity.Id;
                 return rsp;
             });
         }
         /// <summary>
-        /// 修改用户信息
+        /// 修改
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
@@ -58,6 +61,7 @@ namespace YunZhi.Service.Services.Authorities.Impl
                 }
 
                 entity.Name = request.Name;
+                entity.Sort = request.Sort;
                 // 修改
                 RegisterDirty(entity);
                 // 提交
@@ -65,6 +69,7 @@ namespace YunZhi.Service.Services.Authorities.Impl
 
                 rsp.Message = flag ? "更新成功" : "更新失败";
                 rsp.Success = flag;
+                rsp.Data = entity.Id;
                 return rsp;
             });
         }
@@ -82,6 +87,7 @@ namespace YunZhi.Service.Services.Authorities.Impl
 
                 var result = await query
                     .HasWhere(request.Name, p => p.Name.Contains(request.Name))
+                    .OrderBy(p => p.Sort)
                     .ToPageAsync(request.PageIndex, request.PageSize);
                 if (result.Items.Count == 0)
                 {
@@ -104,7 +110,9 @@ namespace YunZhi.Service.Services.Authorities.Impl
             {
                 var rsp = new ApiResult<IList<OperationGroup>>();
 
-                var result = await query.ToListAsync();
+                var result = await query
+                    .OrderBy(p => p.Sort)
+                    .ToListAsync();
                 if (result.Count == 0)
                 {
                     rsp.Message = "暂无数据.";

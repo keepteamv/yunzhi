@@ -22,18 +22,18 @@ namespace YunZhi.WebAPI.Controllers.Authorities
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost("getPages")]
-        [Permission("webapi.getpages.usergroup")]
+        [Permission("authority.getpages.usergroup")]
         public async Task<ApiResult<Page<UserGroup>>> GetPages([FromBody] GetUserGroupPagesRequest request)
         {
             return await _userGroupService.GetPagesAsync(request);
         }
         /// <summary>
-        /// 查询分页数据
+        /// 查询数据列表
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpGet("getList")]
-        [Permission("webapi.getlist.usergroup")]
+        [Permission("authority.getlist.usergroup")]
         public async Task<ApiResult<IList<UserGroup>>> GetList()
         {
             return await _userGroupService.GetListAsync();
@@ -44,7 +44,7 @@ namespace YunZhi.WebAPI.Controllers.Authorities
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost("create")]
-        [Permission("webapi.create.usergroup")]
+        [Permission("authority.create.usergroup")]
         public async Task<ApiResult<string>> Create([FromBody] InsertUserGroupRequest request)
         {
             return await _userGroupService.InsertAsync(request);
@@ -55,10 +55,21 @@ namespace YunZhi.WebAPI.Controllers.Authorities
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost("update")]
-        [Permission("webapi.update.usergroup")]
+        [Permission("authority.update.usergroup")]
         public async Task<ApiResult<string>> Update([FromBody] UpdateUserGroupRequest request)
         {
             return await _userGroupService.UpdateAsync(request);
+        }
+        /// <summary>
+        /// 根据用户ID读取组ID
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        [HttpGet("getIdsByUserId")]
+        [Permission("authority.getidsbyuserid.usergroup")]
+        public async Task<ApiResult<IList<string>>> GetIdsByUserId(string userId)
+        {
+            return await _userGroupService.GetIdsByUserIdAsync(userId);
         }
     }
 }

@@ -7,9 +7,19 @@ namespace YunZhi.Service.Services.Authorities.Responses.Operations
     public class GetOperationsResponse : Operation
     {
         /// <summary>
-        /// 是否选中
+        /// LABEL
         /// </summary>
-        public bool Checked { get; set; }
+        /// <value></value>
+        public string Label { get; set; }
+        /// <summary>
+        /// Value
+        /// </summary>
+        /// <value></value>
+        public string Value { get; set; }
+        /// <summary>
+        /// 选中的列表
+        /// </summary>
+        public IList<string> CheckedList { get; set; }
         /// <summary>
         /// 操作项
         /// </summary>

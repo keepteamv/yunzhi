@@ -55,15 +55,15 @@ namespace YunZhi.WebAPI.Controllers.Authorities
             return await _menuService.GetMenuIdsByRoleIdAsync(roleId);
         }
         /// <summary>
-        /// 根据用户Id读取菜单列表
+        /// 根据用户读取菜单列表
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        [HttpGet("getTreeListByUserId")]
-        [Permission("authority.gettreelistbyuserid.menu")]
-        public async Task<ApiResult<IList<GetMenusResponse>>> GetTreeListByUserId(string userId)
+        [HttpGet("getTreeListByUser")]
+        [Permission("authority.gettreelistbyuser.menu")]
+        public async Task<ApiResult<IList<GetMenusResponse>>> GetTreeListByUser()
         {
-            return await _menuService.GetTreeListByUserIdAsync(userId);
+            return await _menuService.GetTreeListByUserIdAsync(UserId);
         }
         /// <summary>
         /// 创建

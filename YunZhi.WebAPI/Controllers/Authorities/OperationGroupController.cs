@@ -22,18 +22,18 @@ namespace YunZhi.WebAPI.Controllers.Authorities
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost("getPages")]
-        [Permission("webapi.getpages.operationgroup")]
+        [Permission("authority.getpages.operationgroup")]
         public async Task<ApiResult<Page<OperationGroup>>> GetPages([FromBody] GetOperationGroupPagesRequest request)
         {
             return await _operationGroupService.GetPagesAsync(request);
         }
         /// <summary>
-        /// 查询分页数据
+        /// 查询数据列表
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpGet("getList")]
-        [Permission("webapi.getlist.operationgroup")]
+        [Permission("authority.getlist.operationgroup")]
         public async Task<ApiResult<IList<OperationGroup>>> GetList()
         {
             return await _operationGroupService.GetListAsync();
@@ -44,7 +44,7 @@ namespace YunZhi.WebAPI.Controllers.Authorities
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost("create")]
-        [Permission("webapi.create.operationgroup")]
+        [Permission("authority.create.operationgroup")]
         public async Task<ApiResult<string>> Create([FromBody] InsertOperationGroupRequest request)
         {
             return await _operationGroupService.InsertAsync(request);
@@ -55,7 +55,7 @@ namespace YunZhi.WebAPI.Controllers.Authorities
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost("update")]
-        [Permission("webapi.update.operationgroup")]
+        [Permission("authority.update.operationgroup")]
         public async Task<ApiResult<string>> Update([FromBody] UpdateOperationGroupRequest request)
         {
             return await _operationGroupService.UpdateAsync(request);

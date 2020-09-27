@@ -147,7 +147,7 @@ const TableList = (props) => {
     dataIndex: 'option',
     valueType: 'option',
     render: (_, record) => [
-      <Access accessible={canOperation(path, '编辑')}>
+      <Access accessible={canOperation('编辑')}>
         <Link to={`/manager/equipment/edit?id=${record.id}`}>编辑</Link>
       </Access>,
       <TableDropdown
@@ -198,7 +198,7 @@ const TableList = (props) => {
         actionRef={actionRef}
         rowKey="id"
         toolBarRender={() => [
-          <Access accessible={canOperation(path, '新增')}>
+          <Access accessible={canOperation('新增')}>
             <Button type="primary" onClick={() => handleModalVisible(true)}>
               <PlusOutlined /> 创建
             </Button>

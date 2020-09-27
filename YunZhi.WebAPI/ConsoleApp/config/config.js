@@ -3,8 +3,10 @@ import { defineConfig } from 'umi';
 import defaultSettings from './defaultSettings';
 import proxy from './proxy';
 const { REACT_APP_ENV } = process.env;
+const outputPath = '../wwwroot';
 // import routes from './route';
 export default defineConfig({
+  outputPath,
   hash: true,
   antd: {},
   history: {

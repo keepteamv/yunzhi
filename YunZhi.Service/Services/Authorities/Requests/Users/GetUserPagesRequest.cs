@@ -19,5 +19,10 @@ namespace YunZhi.Service.Services.Authorities.Requests.Users
         /// 用户组Id
         /// </summary>
         public string UserGroupId { get; set; }
+        /// <summary>
+        /// 角色组ID
+        /// </summary>
+        /// <value></value>
+        public string RoleGroupId { get; set; }
     }
 }

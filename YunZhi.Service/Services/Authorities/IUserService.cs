@@ -33,5 +33,17 @@ namespace YunZhi.Service.Services.Authorities
         /// <param name="request"></param>
         /// <returns></returns>
         Task<ApiResult<Page<User>>> GetPagesAsync(GetUserPagesRequest request);
+        /// <summary>
+        /// 保存用户组与用户关联信息
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        Task<ApiResult<string>> SaveUserGroupUserAsync(SaveUserGroupUserRequest request);
+        /// <summary>
+        /// 保存用户与角色关联信息
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        Task<ApiResult<string>> SaveUserRoleAsync(SaveUserRoleRequest request);
     }
 }

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using YunZhi.Service.Infrastructure.Attributes;
 using YunZhi.Service.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Controllers;
+using YunZhi.Service.Infrastructure.Services;
 
 namespace YunZhi.WebAPI.Authentications
 {
@@ -38,13 +39,13 @@ namespace YunZhi.WebAPI.Authentications
                 var result = new JwtSecurityToken(token.Split(' ')[1]);
                 // 读取用户ID
                 var userId = result.Claims.FirstOrDefault(p => p.Type == ClaimTypes.NameIdentifier)?.Value;
+                // 实例化redis服务
+                var redisService = new RedisService();
                 // 读取用户拥有的权限
-                // TODO 需要读取缓存，该缓存在用户登录时存入
-                var permissions = new List<string>{
-                    "user.put"
-                };
+                var permissions = redisService.StringGet<IList<string>>(userId);
+
                 // 与特性标记的对比,如果不存在,则验证失败
-                if (!permissions.Any(tag => info.Permissions.Contains(tag)))
+                if (permissions == null || !permissions.Any(tag => info.Permissions.Contains(tag)))
                 {
                     context.Result = new JsonResult(new ApiResult<string>
                     {

@@ -17,6 +17,10 @@ namespace YunZhi.Service.Services.Authorities.Responses.Menus
         /// <value></value>
         public string Title { get; set; }
         /// <summary>
+        /// Value
+        /// </summary>
+        public string Value { get; set; }
+        /// <summary>
         /// 子级
         /// </summary>
         /// <value></value>

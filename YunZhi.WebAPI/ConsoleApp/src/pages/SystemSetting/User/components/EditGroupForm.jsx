@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Modal, Spin, Transfer, Form } from 'antd';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import ProForm from '@ant-design/pro-form';
-import { queryRoleGroup, queryRoleGroupIds } from '../service';
+import { queryUserGroup, queryUserGroupIds } from '../service';
 
-const UpdateForm = props => {
+const EditGroupForm = props => {
   const { modalVisible, onCancel, onSubmit, loading, record } = props;
   const [group, setGroup] = useState([]);
   const [isInit, setIsInit] = useState(false);
@@ -12,12 +12,12 @@ const UpdateForm = props => {
   const [selectedKeys, setSelectedKeys] = useState([]);
   useEffect(() => {
     if (!isInit) {
-      queryRoleGroup()
+      queryUserGroup()
         .then(res => {
           setIsInit(true);
           setGroup(res.success ? res.data : []);
         });
-      queryRoleGroupIds({ roleId: record.id }).then(res => {
+      queryUserGroupIds({ userId: record.id }).then(res => {
         setTargetKeys(res.success ? res.data : []);
       });
     }
@@ -26,23 +26,22 @@ const UpdateForm = props => {
   return (
     <Modal
       destroyOnClose
-      title={`更新[${record.name}]组信息`}
+      title={`更新[${record.userName}]组信息`}
       visible={modalVisible}
       onCancel={() => onCancel()}
       footer={null}
     >
       <Spin tip="正在处理..." spinning={loading}>
         <ProForm
-          initialValues={record}
           onFinish={async value => {
             // 提交
             onSubmit({
-              roleId: record.id,
+              userId: record.id,
               ...value
             });
           }}
         >
-          <Form.Item label="" name="roleGroupIds">
+          <Form.Item label="" name="userGroupIds">
             <Transfer
               rowKey={item => item.id}
               dataSource={group}
@@ -65,4 +64,4 @@ const UpdateForm = props => {
   );
 };
 
-export default UpdateForm;
+export default EditGroupForm;

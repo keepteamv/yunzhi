@@ -21,5 +21,10 @@ namespace YunZhi.Service.Services.Authorities.Requests.Users
         /// 手机号
         /// </summary>
         public string PhoneNumber { get; set; }
+        /// <summary>
+        /// Email
+        /// </summary>
+        /// <value></value>
+        public string Email { get; set; }
     }
 }

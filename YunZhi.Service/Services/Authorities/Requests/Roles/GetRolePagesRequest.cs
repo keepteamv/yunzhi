@@ -13,5 +13,10 @@ namespace YunZhi.Service.Services.Authorities.Requests.Roles
         /// </summary>
         /// <value></value>
         public string Name { get; set; }
+        /// <summary>
+        /// 角色组ID
+        /// </summary>
+        /// <value></value>
+        public string RoleGroupId { get; set; }
     }
 }

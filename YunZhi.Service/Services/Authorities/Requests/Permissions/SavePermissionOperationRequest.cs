@@ -4,9 +4,9 @@ using System.Collections.Generic;
 namespace YunZhi.Service.Services.Authorities.Requests.Permissions
 {
     /// <summary>
-    /// 保存权限菜单请求类
+    /// 保存权限操作请求类
     /// </summary>
-    public class SavePermissionMenuRequest
+    public class SavePermissionOperationRequest
     {
         /// <summary>
         /// 角色ID
@@ -14,9 +14,9 @@ namespace YunZhi.Service.Services.Authorities.Requests.Permissions
         /// <value></value>
         public string RoleId { get; set; }
         /// <summary>
-        /// 菜单Id列表
+        /// 操作Id列表
         /// </summary>
         /// <value></value>
-        public IList<string> MenuIds { get; set; }
+        public IList<string> OperationIds { get; set; }
     }
 }

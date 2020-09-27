@@ -1,10 +1,12 @@
-import { Tooltip, Tag } from 'antd';
-import { QuestionCircleOutlined } from '@ant-design/icons';
+import { Tooltip, Tag, message } from 'antd';
+import { QuestionCircleOutlined, ClearOutlined } from '@ant-design/icons';
 import React from 'react';
 import { connect, SelectLang } from 'umi';
+import { clearMenus, clearPermissions } from '@/utils/authority';
 import Avatar from './AvatarDropdown';
 import HeaderSearch from '../HeaderSearch';
 import styles from './index.less';
+
 const ENVTagColor = {
   dev: 'orange',
   test: 'green',
@@ -43,9 +45,24 @@ const GlobalHeaderRight = (props) => {
             value: 'Pro Layout',
           },
         ]} // onSearch={value => {
-        //   //console.log('input', value);
-        // }}
+      //   //console.log('input', value);
+      // }}
       />
+      <Tooltip title="清除缓存">
+        <a
+          style={{
+            color: 'inherit',
+          }}
+          onClick={() => {
+            clearMenus();
+            clearPermissions();
+            message.success('清除成功');
+            window.location.reload();
+          }}
+        >
+          <ClearOutlined />
+        </a>
+      </Tooltip>
       <Tooltip title="使用文档">
         <a
           style={{

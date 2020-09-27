@@ -30,5 +30,10 @@ namespace YunZhi.Service.Services.Authorities.Requests.Operations
         /// </summary>
         /// <value></value>
         public string Tips { get; set; }
+        /// <summary>
+        /// 排序字段
+        /// </summary>
+        /// <value></value>
+        public int Sort { get; set; }
     }
 }

@@ -75,6 +75,11 @@ namespace YunZhi.Service.Services
         {
             _context.Set<TEntity>().Remove(entity);
         }
+        protected void RegisterDeleteRange<TEntity>(IList<TEntity> entities)
+            where TEntity : EntityCore
+        {
+            _context.Set<TEntity>().RemoveRange(entities);
+        }
 
         protected async Task<bool> CommitAsync()
         {

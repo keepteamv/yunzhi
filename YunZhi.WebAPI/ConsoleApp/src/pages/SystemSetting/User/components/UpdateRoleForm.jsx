@@ -2,31 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { Modal, Spin, Transfer, Form } from 'antd';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import ProForm from '@ant-design/pro-form';
-import { getRoles } from '../service';
+import { queryRoleIds, queryRoles } from '../service';
 
 const UpdateForm = props => {
   const { modalVisible, onCancel, onSubmit, loading, record } = props;
   const [roles, setRoles] = useState([]);
   const [isInit, setIsInit] = useState(false);
   const [targetKeys, setTargetKeys] = useState([]);
-  const [isInitTargetKeys, setIsInitTargetKeys] = useState(false);
   const [selectedKeys, setSelectedKeys] = useState([]);
   useEffect(() => {
     if (!isInit) {
-      getRoles({
-        websiteType: record.websiteType
-      }).then(res => {
+      queryRoles().then(res => {
         setIsInit(true);
         setRoles(res.success ? res.data : []);
-      })
-    }
-  })
-  useEffect(() => {
-    if (!isInitTargetKeys) {
-      setIsInitTargetKeys(true);
-      if (record.roleIds) {
-        setTargetKeys(record.roleIds.split(','));
-      }
+      });
+      queryRoleIds({ userId: record.id }).then(res => {
+        setTargetKeys(res.success ? res.data : []);
+      });
     }
   })
 
@@ -44,14 +36,14 @@ const UpdateForm = props => {
           onFinish={async value => {
             // 提交
             onSubmit({
-              id: record.id,
+              userId: record.id,
               ...value
             });
           }}
         >
           <Form.Item label="" name="roleIds">
             <Transfer
-              rowKey={item => item.roleId}
+              rowKey={item => item.id}
               dataSource={roles}
               titles={['未选角色', '已选角色']}
               targetKeys={targetKeys}
@@ -62,7 +54,7 @@ const UpdateForm = props => {
               onSelectChange={(sourceSelectedKeys, targetSelectedKeys) => {
                 setSelectedKeys([...sourceSelectedKeys, ...targetSelectedKeys])
               }}
-              render={item => item.roleName}
+              render={item => item.name}
               style={{ marginBottom: 16 }}
             />
           </Form.Item>

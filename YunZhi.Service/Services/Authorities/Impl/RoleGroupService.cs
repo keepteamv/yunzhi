@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using YunZhi.Service.Infrastructure;
@@ -6,14 +7,14 @@ using YunZhi.Service.Infrastructure.Attributes;
 using YunZhi.Service.Infrastructure.Extensions;
 using YunZhi.Service.Models;
 using YunZhi.Service.Models.Authorities;
-using YunZhi.Service.Services.Authorities.Requests.UserGroups;
+using YunZhi.Service.Services.Authorities.Requests.RoleGroups;
 
 namespace YunZhi.Service.Services.Authorities.Impl
 {
     [Component]
-    public class UserGroupService : ServiceBase<UserGroup>, IUserGroupService
+    public class RoleGroupService : ServiceBase<RoleGroup>, IRoleGroupService
     {
-        public UserGroupService(YunZhiDbContext context) : base(context)
+        public RoleGroupService(YunZhiDbContext context) : base(context)
         {
         }
         /// <summary>
@@ -21,12 +22,12 @@ namespace YunZhi.Service.Services.Authorities.Impl
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public async Task<ApiResult<string>> InsertAsync(InsertUserGroupRequest request)
+        public async Task<ApiResult<string>> InsertAsync(InsertRoleGroupRequest request)
         {
             return await ExecuteResultAsync(async query =>
             {
                 var rsp = new ApiResult<string>();
-                var entity = new UserGroup
+                var entity = new RoleGroup
                 {
                     Name = request.Name,
                     Status = request.Status,
@@ -44,11 +45,11 @@ namespace YunZhi.Service.Services.Authorities.Impl
             });
         }
         /// <summary>
-        /// 修改用户信息
+        /// 修改
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public async Task<ApiResult<string>> UpdateAsync(UpdateUserGroupRequest request)
+        public async Task<ApiResult<string>> UpdateAsync(UpdateRoleGroupRequest request)
         {
             return await ExecuteResultAsync(async query =>
             {
@@ -80,11 +81,11 @@ namespace YunZhi.Service.Services.Authorities.Impl
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public async Task<ApiResult<Page<UserGroup>>> GetPagesAsync(GetUserGroupPagesRequest request)
+        public async Task<ApiResult<Page<RoleGroup>>> GetPagesAsync(GetRoleGroupPagesRequest request)
         {
             return await QueryResultAsync(async query =>
             {
-                var rsp = new ApiResult<Page<UserGroup>>();
+                var rsp = new ApiResult<Page<RoleGroup>>();
 
                 var result = await query
                     .HasWhere(request.Name, p => p.Name.Contains(request.Name))
@@ -104,13 +105,39 @@ namespace YunZhi.Service.Services.Authorities.Impl
         /// 读取数据列表
         /// </summary>
         /// <returns></returns>
-        public async Task<ApiResult<IList<UserGroup>>> GetListAsync()
+        public async Task<ApiResult<IList<RoleGroup>>> GetListAsync()
         {
             return await QueryResultAsync(async query =>
             {
-                var rsp = new ApiResult<IList<UserGroup>>();
+                var rsp = new ApiResult<IList<RoleGroup>>();
 
                 var result = await query.ToListAsync();
+                if (result.Count == 0)
+                {
+                    rsp.Message = "暂无数据.";
+                    return rsp;
+                }
+                rsp.Message = "读取成功.";
+                rsp.Data = result;
+                rsp.Success = true;
+                return rsp;
+            });
+        }
+        /// <summary>
+        /// 根据角色ID读取组ID
+        /// </summary>
+        /// <param name="roleId"></param>
+        /// <returns></returns>
+        public async Task<ApiResult<IList<string>>> GetIdsByRoleIdAsync(string roleId)
+        {
+            return await QueryResultAsync(async query =>
+            {
+                var rsp = new ApiResult<IList<string>>();
+
+                var result = await QueryNoTracking<RoleGroupRole>()
+                    .Where(p => p.RoleId == roleId)
+                    .Select(p => p.RoleGroupId)
+                    .ToListAsync();
                 if (result.Count == 0)
                 {
                     rsp.Message = "暂无数据.";

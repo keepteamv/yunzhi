@@ -14,7 +14,7 @@ namespace YunZhi.WebAPI.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [Authorize]
-    // [APIAuthorizeFilter]
+    [APIAuthorizeFilter]
     public class YunZhiControllerBase : ControllerBase
     {
         /// <summary>

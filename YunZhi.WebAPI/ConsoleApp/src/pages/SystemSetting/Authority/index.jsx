@@ -44,7 +44,7 @@ const Authority = props => {
           <div style={{ fontSize: 16, paddingTop: 5, color: 'red' }}>注：点击左侧角色读取该角色的权限进行操作！</div>
         </Col>
         <Col span={12} style={{ textAlign: 'right' }}>
-          <Access accessible={canOperation(path, '保存')}>
+          <Access accessible={canOperation('保存')}>
             <Button type="primary" loading={updateRequest.loading} disabled={checkedKeys.length === 0 || roleId === ''} onClick={() => {
               updateRequest.run({
                 id: roleId,

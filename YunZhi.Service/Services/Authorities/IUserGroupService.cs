@@ -30,5 +30,11 @@ namespace YunZhi.Service.Services.Authorities
         /// </summary>
         /// <returns></returns>
         Task<ApiResult<IList<UserGroup>>> GetListAsync();
+        /// <summary>
+        /// 根据用户ID读取组ID
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        Task<ApiResult<IList<string>>> GetIdsByUserIdAsync(string userId);
     }
 }

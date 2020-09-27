@@ -68,7 +68,7 @@ const TableList = (routes) => {
         const checked = entity.status === 1;
         return <>
           <Popconfirm placement="right" title={`确定要${entity.status === 1 ? '禁用' : '启用'}吗？`}
-            disabled={!canOperation(path, '更新状态')}
+            disabled={!canOperation('更新状态')}
             onConfirm={async () => {
               updateStatusRequest.run({
                 id: entity.id,
@@ -80,7 +80,7 @@ const TableList = (routes) => {
               unCheckedChildren="禁用"
               loading={updateStatusRequest.loading}
               checked={checked}
-              disabled={!canOperation(path, '更新状态')} />
+              disabled={!canOperation('更新状态')} />
           </Popconfirm>
         </>;
       },
@@ -116,17 +116,17 @@ const TableList = (routes) => {
       width: 85,
       render: (_, record) => (
         <>
-          <Access accessible={canOperation(path, '编辑')}>
-            <Button
-              size='small'
-              onClick={() => {
-                handleUpdateModalVisible(true);
-                setUpdateFormValues({ ...record, status: record.status === 1 });
-              }}
-            >
-              编辑
+          {/* <Access accessible={canOperation('编辑')}> */}
+          <Button
+            size='small'
+            onClick={() => {
+              handleUpdateModalVisible(true);
+              setUpdateFormValues({ ...record, status: record.status === 1 });
+            }}
+          >
+            编辑
             </Button>
-          </Access>
+          {/* </Access> */}
         </>
       ),
     },
@@ -141,11 +141,14 @@ const TableList = (routes) => {
           labelWidth: 120,
         }}
         toolBarRender={() => [
-          <Access accessible={canOperation(path, '新增')}>
-            <Button type="primary" onClick={() => handleModalVisible(true)}>
-              <PlusOutlined /> 创建
-            </Button>
-          </Access>,
+          // <Access accessible={canOperation('新增')}>
+          //   <Button type="primary" onClick={() => handleModalVisible(true)}>
+          //     <PlusOutlined /> 创建
+          //   </Button>
+          // </Access>,
+          <Button type="primary" onClick={() => handleModalVisible(true)}>
+            <PlusOutlined /> 创建
+          </Button>
         ]}
         request={async (params) => {
           const result = await query(params);

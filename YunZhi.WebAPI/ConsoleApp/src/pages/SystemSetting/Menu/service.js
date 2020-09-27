@@ -24,8 +24,8 @@ export async function updateStatus(params) {
   });
 }
 
-export async function queryCascaders(params) {
-  return request('/api/Menu/getCascaders', {
+export async function queryTreeList(params) {
+  return request('/api/Menu/getTreeList', {
     params,
   });
 }
