@@ -36,15 +36,37 @@ namespace YunZhi.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            ConfigSettings.RedisConfig = new RedisConfig()
+            #region RedisConfig
+            // 读取环境变量的配置信息
+            var redisConfig = Environment.GetEnvironmentVariable("REDISCONFIG");
+            if (string.IsNullOrEmpty(redisConfig))
             {
-                Address = Configuration.GetSection("RedisConfig")["Address"],
-                Password = Configuration.GetSection("RedisConfig")["Password"],
-                Port = Configuration.GetSection("RedisConfig")["Port"]
-            };
-
+                ConfigSettings.RedisConfig = new RedisConfig()
+                {
+                    Address = Configuration.GetSection("RedisConfig")["Address"],
+                    Password = Configuration.GetSection("RedisConfig")["Password"],
+                    Port = Configuration.GetSection("RedisConfig")["Port"]
+                };
+            }
+            else
+            {
+                ConfigSettings.RedisConfig = new RedisConfig()
+                {
+                    Address = redisConfig.Split(':')[0],
+                    Password = redisConfig.Split(':')[1],
+                    Port = redisConfig.Split(':')[2],
+                };
+            }
+            #endregion
+            #region Mysql DbContext config
+            var connectionString = Environment.GetEnvironmentVariable("MYSQL_CONNECTION_STRING");
+            if (string.IsNullOrEmpty(connectionString))
+            {
+                connectionString = Configuration.GetConnectionString("data");
+            }
             services.AddDbContext<YunZhiDbContext>(opt =>
-                opt.UseMySql(Configuration.GetConnectionString("data"), p => p.MigrationsAssembly("YunZhi.WebAPI")));
+                opt.UseMySql(connectionString, p => p.MigrationsAssembly("YunZhi.WebAPI")));
+            #endregion
             // 添加Swagger
             services.AddSwaggerGen(c =>
             {
