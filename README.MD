@@ -1,8 +1,11 @@
-# 管理前端
 
-1. 框架：UMIJS(基于React) [https://umijs.org/](https://umijs.org/)
-2. UI 框架 ：Ant Design Pro [https://pro.ant.design/](https://pro.ant.design/)
-3. UI：Ant Design [https://ant.design/](https://ant.design/) 
+[预览](http://yz.webapi.zhengjinfan.cn/index.html)[admin/admin]
+
+# 管理前端(React)
+
+1. 框架：[UMIJS](https://umijs.org/)
+2. UI 框架 ：[Ant Design Pro](https://pro.ant.design/)
+3. UI：[Ant Design](https://ant.design/) 
 4. UI 组件：[https://procomponents.ant.design/](https://procomponents.ant.design/)
 
 ## 开发与发布
@@ -12,7 +15,7 @@
 ### 开发
 
 ```bash
-# 1.还原依赖我
+# 1.还原依赖
 yarn 
 # or
 npm i
@@ -40,6 +43,9 @@ npm run build
 1. 语言：C#
 2. 框架：asp.net core 3.1
 3. 数据库：mysql
+4. 缓存中间件：redis
+5. 身份验证方式：jwt
+6. API文档：swagger
 
 
 ## 文件夹说明
@@ -52,6 +58,7 @@ npm run build
 
 ## 还原数据库步骤
 
+### 使用Code first还原
 ``` bash
 # 安装dotnet ef 工具
 dotnet tool install --global dotnet-ef
@@ -61,7 +68,8 @@ cd YunZhi.WebAPI
 # 3.运行更新命令
 dotnet ef database update -c YunZhiDbContext
 ```
-
+### 使用脚本文件还原（该方式有测试数据）
+> 文件：yunzhi_data.sql
 
 
 ## 新增表或者修改表结构并同步到数据库步骤

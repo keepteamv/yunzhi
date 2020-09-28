@@ -30,9 +30,7 @@
     "test": "umi test",
     "test:all": "node ./tests/run-tests.js",
     "test:component": "umi test ./src/components",
-    "tsc": "tsc --noEmit",
-    "upload": "cross-env node ./tools/upload/autoupdate.main.js",
-    "upload:dev": "cross-env NODE_ENV=development node ./tools/upload/autoupdate.main.js"
+    "tsc": "tsc --noEmit"
   },
   "lint-staged": {
     "**/*.less": "stylelint --syntax less",

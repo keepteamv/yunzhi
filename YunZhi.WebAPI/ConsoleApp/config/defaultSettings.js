@@ -10,7 +10,7 @@ const proSettings = {
   menu: {
     locale: true,
   },
-  title: '小玎小珰云平台',
+  title: '云芝',
   pwa: false,
   iconfontUrl: '',
 };

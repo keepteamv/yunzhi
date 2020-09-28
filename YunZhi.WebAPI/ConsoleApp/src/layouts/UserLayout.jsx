@@ -42,10 +42,10 @@ const UserLayout = (props) => {
             <div className={styles.header}>
               <Link to="/">
                 {/* <img alt="logo" className={styles.logo} src={logo} /> */}
-                <span className={styles.title}>小玎小珰饮品</span>
+                <span className={styles.title}>云芝</span>
               </Link>
             </div>
-            <div className={styles.desc}>小玎小珰云平台管理系统</div>
+            <div className={styles.desc}>云芝管理系统</div>
           </div>
           {children}
         </div>
