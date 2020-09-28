@@ -79,52 +79,10 @@ export default defineConfig({
               ],
             },
             {
-              name: 'product',
-              icon: 'smile',
-              path: '/product',
-              component: './Product',
-            },
-            {
               name: '分析页',
               icon: 'smile',
               path: '/index',
               component: './Index',
-            },
-            {
-              name: '经营者管理',
-              icon: 'smile',
-              path: '/manager',
-              component: './Manager',
-            },
-            {
-              name: '经营者收支记录管理',
-              icon: 'smile',
-              path: '/manager/income-and-expense',
-              component: './Manager/IncomeAndExpense',
-            },
-            {
-              name: '提现记录管理',
-              icon: 'smile',
-              path: '/manager/cash-out-record',
-              component: './Manager/CashOutRecord',
-            },
-            {
-              name: '充值记录管理',
-              icon: 'smile',
-              path: '/manager/recharge',
-              component: './Manager/Recharge',
-            },
-            {
-              name: '门店管理',
-              icon: 'smile',
-              path: '/manager/equipment',
-              component: './Manager/Equipment',
-            },
-            {
-              name: '编辑门店',
-              icon: 'smile',
-              path: '/manager/equipment/edit',
-              component: './Manager/Equipment/Edit',
             },
             {
               name: '角色管理',
@@ -143,24 +101,6 @@ export default defineConfig({
               icon: 'smile',
               path: '/user',
               component: './SystemSetting/User',
-            },
-            {
-              name: '权限管理',
-              icon: 'smile',
-              path: '/authority',
-              component: './SystemSetting/Authority',
-            },
-            {
-              name: '订单管理',
-              icon: 'smile',
-              path: '/order',
-              component: './Order',
-            },
-            {
-              name: '会员管理',
-              icon: 'smile',
-              path: '/member',
-              component: './Member',
             },
             {
               component: './404',
